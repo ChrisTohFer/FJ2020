@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
     //Public properties
+    public float horizontalMoveSpeed = 4f;
+    public float horizontalAccel = 2f;
     public float coyoteTime = 0.2f;
     public float bandMaxStretch = 5f;   //The distance at which the band will auto fling the player
     public float flyingDuration = .5f; //The time after flinging during which physics is altered
@@ -39,7 +41,19 @@ public class Movement : MonoBehaviour
     void ApplyPlayerMovement()
     {
         if(m_grounded)
-            m_rigidBody.velocity = new Vector2(m_movementInput.x * 4, m_rigidBody.velocity.y);
+        {
+            var vel = m_rigidBody.velocity;
+            var accelTick = m_movementInput.x * horizontalAccel * Time.deltaTime;
+            if (m_rigidBody.velocity.x * Mathf.Sign(accelTick) < horizontalMoveSpeed * 0.25f)
+            {
+                m_rigidBody.velocity = new Vector2(vel.x + accelTick * 5f, vel.y);
+            }
+            else if (m_rigidBody.velocity.x * Mathf.Sign(accelTick) < horizontalMoveSpeed)
+            {
+                m_rigidBody.velocity = new Vector2(vel.x + accelTick, vel.y);
+            }
+
+        }
     }
 
     void ApplyDrag()
@@ -62,7 +76,7 @@ public class Movement : MonoBehaviour
             return;
 
         Vector2 rayStart = transform.position + Vector3.down * (m_collider.bounds.extents.y + 0.1f);
-        //Debug.DrawRay(rayStart, Vector3.down * 0.1f, Color.red);
+        Debug.DrawRay(rayStart, Vector3.down * 0.1f, Color.red);
 
         RaycastHit2D result;
         result = Physics2D.Raycast(rayStart, Vector2.down, 0.1f);
@@ -181,6 +195,9 @@ public class Movement : MonoBehaviour
         else if (m_band.Pinned)
             SetFlinging();
         else
-            m_band.Unpin();
+        {
+            m_band.PinToLocationInstant(m_band.slingDestination);
+            SetFlinging();
+        }
     }
 }

@@ -10,8 +10,14 @@ public class RubberBand : MonoBehaviour
     public float slingTime = 0.2f;
     public Transform pin;
     public Rigidbody2D rigidBody;
+    public Vector3 slingDestination
+    {
+        get { return m_slingDestination; }
+        set { m_slingDestination = value; }
+    }
 
     //
+    Vector3 m_slingDestination;
     bool m_slinging = false;
 
     public bool Pinned
@@ -43,6 +49,13 @@ public class RubberBand : MonoBehaviour
         rigidBody.simulated = false;
         StartCoroutine(BandSling(slingTime, pos));
     }
+    public void PinToLocationInstant(Vector3 pos)
+    {
+        rigidBody.simulated = false;
+        pin.position = pos;
+        StopCoroutine("BandSling");
+        m_slinging = false;
+    }
     public void Unpin()
     {
         rigidBody.simulated = true;
@@ -59,7 +72,7 @@ public class RubberBand : MonoBehaviour
             pin.position = destination;
             yield break;
         }
-
+        slingDestination = destination;
         m_slinging = true;
 
        var originalPosition = pin.transform.position;

@@ -98,6 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616d7f3f4233d084ab2ef0794d451466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  horizontalMoveSpeed: 5
+  horizontalAccel: 4
   coyoteTime: 0.2
   bandMaxStretch: 5
   flyingDuration: 0.25
