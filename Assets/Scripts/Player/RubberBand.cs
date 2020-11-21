@@ -35,7 +35,7 @@ public class RubberBand : MonoBehaviour
         var angle = -Vector2.SignedAngle(difference, Vector2.right);
 
         transform.eulerAngles = new Vector3(0f, 0f, angle);
-        transform.localScale = new Vector3(difference.magnitude, 1f / Mathf.Pow(difference.magnitude, thinningPower));
+        transform.localScale = new Vector3(difference.magnitude, 1f / Mathf.Pow(Mathf.Max(difference.magnitude, 1f), thinningPower));
     }
 
     public void PinToLocation(Vector3 pos)

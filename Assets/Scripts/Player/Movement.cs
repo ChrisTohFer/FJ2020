@@ -84,7 +84,6 @@ public class Movement : MonoBehaviour
         {
             SetFlinging();
         }
-
     }
 
     void SetGrounded()
