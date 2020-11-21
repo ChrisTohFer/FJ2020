@@ -433,10 +433,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerHolder
       objectReference: {fileID: 0}
-    - target: {fileID: 522245006859220878, guid: 4c431dc530c1e944cb7bc04e8482bde4, type: 3}
-      propertyPath: m_GravityScale
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 522245006859220879, guid: 4c431dc530c1e944cb7bc04e8482bde4, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -481,30 +477,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 522245006859220976, guid: 4c431dc530c1e944cb7bc04e8482bde4, type: 3}
-      propertyPath: drag
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 522245006859220976, guid: 4c431dc530c1e944cb7bc04e8482bde4, type: 3}
-      propertyPath: maxSpeed
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 522245006859220976, guid: 4c431dc530c1e944cb7bc04e8482bde4, type: 3}
-      propertyPath: flyingSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 522245006859220976, guid: 4c431dc530c1e944cb7bc04e8482bde4, type: 3}
-      propertyPath: flyingGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 522245006859220976, guid: 4c431dc530c1e944cb7bc04e8482bde4, type: 3}
-      propertyPath: defaultGravity
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 522245006859220976, guid: 4c431dc530c1e944cb7bc04e8482bde4, type: 3}
-      propertyPath: flyingDuration
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 522245006966749718, guid: 4c431dc530c1e944cb7bc04e8482bde4, type: 3}
       propertyPath: pin
       value: 
@@ -522,10 +494,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1637470401939593444, guid: d5361b2ba9dd7b84294f86d8e504f70d, type: 3}
-      propertyPath: m_GravityScale
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1637470401939593446, guid: d5361b2ba9dd7b84294f86d8e504f70d, type: 3}
       propertyPath: m_RootOrder
       value: 4
