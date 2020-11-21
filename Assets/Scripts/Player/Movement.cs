@@ -176,7 +176,6 @@ public class Movement : MonoBehaviour
     {
         for (float time = 0; time < duration; time += Time.fixedDeltaTime)
         {
-            Debug.Log(time + ", " + duration);
             yield return new WaitForFixedUpdate();
         }
         SetAirborne();
