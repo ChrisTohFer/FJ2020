@@ -7,6 +7,13 @@ public class Movement : MonoBehaviour
 {
     //Public properties
     public float coyoteTime = 0.2f;
+    public float bandMaxStretch = 5f;   //The distance at which the band will auto fling the player
+    public float flyingDuration = .5f; //The time after flinging during which physics is altered
+    public float defaultGravity = 1f;
+    public float flyingGravity = 1f;
+    public float flingSpeed = 15f;
+    public float maxSpeed = 15f;
+    public float drag = 10f;
 
     //Public references
     public Rigidbody2D m_rigidBody;
@@ -16,23 +23,47 @@ public class Movement : MonoBehaviour
     //Private data
     Vector2 m_movementInput;
     bool m_grounded = false;
+    bool m_flinging = false;
+    bool m_flying = false;
 
     private void FixedUpdate()
     {
+        CheckGrounded();
         ApplyPlayerMovement();
+        CheckBandState();
+        ApplyDrag();
     }
 
     //Functions
 
     void ApplyPlayerMovement()
     {
-        CheckGrounded();
         if(m_grounded)
             m_rigidBody.velocity = new Vector2(m_movementInput.x * 4, m_rigidBody.velocity.y);
     }
 
+    void ApplyDrag()
+    {
+        Debug.Log("Enter drag function");
+        if (m_flinging || m_rigidBody.velocity.magnitude < maxSpeed)
+            return;
+
+        var excessVelocity = m_rigidBody.velocity.normalized * (m_rigidBody.velocity.magnitude - maxSpeed);
+
+        Debug.Log("ExcessVelocity:" + excessVelocity);
+
+        var dragPerFrame = drag * Time.fixedDeltaTime;
+        if (excessVelocity.magnitude < dragPerFrame)
+            m_rigidBody.velocity -= excessVelocity;
+        else
+            m_rigidBody.velocity -= excessVelocity.normalized * dragPerFrame;
+    }
+
     void CheckGrounded()
     {
+        if (m_flinging || m_flying)
+            return;
+
         Vector2 rayStart = transform.position + Vector3.down * (m_collider.bounds.extents.y + 0.1f);
         //Debug.DrawRay(rayStart, Vector3.down * 0.1f, Color.red);
 
@@ -42,12 +73,62 @@ public class Movement : MonoBehaviour
         {
             if (result.transform.tag == "Ground")
             {
-                m_grounded = true;
+                SetGrounded();
                 StopCoroutine("CoyoteWait");
             }
         }
         else if (m_grounded)
             StartCoroutine(CoyoteWait(coyoteTime));
+    }
+
+    void CheckBandState()
+    {
+        if(m_band.Pinned && m_band.StretchVector.magnitude > bandMaxStretch)
+        {
+            SetFlinging();
+        }
+
+    }
+
+    void SetGrounded()
+    {
+        m_grounded = true;
+        m_flinging = false;
+        m_flying = false;
+        m_rigidBody.simulated = true;
+        m_rigidBody.gravityScale = defaultGravity;
+        StopAllCoroutines();
+    }
+    void SetAirborne()
+    {
+        m_grounded = false;
+        m_flinging = false;
+        m_flying = false;
+        m_rigidBody.simulated = true;
+        m_rigidBody.gravityScale = defaultGravity;
+        StopAllCoroutines();
+    }
+    void SetFlinging()
+    {
+        m_grounded = false;
+        m_flinging = true;
+        m_flying = false;
+        m_rigidBody.simulated = true;
+        m_rigidBody.gravityScale = 0f;
+        StopAllCoroutines();
+        StartCoroutine(FlingToPin());
+    }
+    void SetFlying(Vector2 velocity)
+    {
+        m_grounded = false;
+        m_flinging = false;
+        m_flying = true;
+        m_rigidBody.simulated = true;
+        m_rigidBody.gravityScale = flyingGravity;
+        m_rigidBody.velocity = velocity;
+        StopAllCoroutines();
+        StartCoroutine(Fly());
+        m_band.Unpin();
     }
 
     //Coroutines
@@ -59,7 +140,27 @@ public class Movement : MonoBehaviour
             Debug.Log(time + ", " + duration);
             yield return new WaitForFixedUpdate();
         }
-        m_grounded = false;
+        SetAirborne();
+    }
+
+    IEnumerator FlingToPin()
+    {
+        var direction = m_band.StretchVector.normalized;
+        var velocity = direction * flingSpeed;
+        m_rigidBody.velocity = velocity;
+
+        while (direction.x * m_band.StretchVector.x > 0 && direction.y * m_band.StretchVector.y > 0) //if either x or y flip sign we have finished flinging
+            yield return new WaitForFixedUpdate();
+
+        SetFlying(velocity);
+    }
+
+    IEnumerator Fly()
+    {
+        for (float time = 0f; time < flyingDuration; time += Time.fixedDeltaTime)
+            yield return new WaitForFixedUpdate();
+
+        SetAirborne();
     }
 
     //Callbacks
@@ -72,29 +173,18 @@ public class Movement : MonoBehaviour
 
     private void OnClick(InputValue button)
     {
+        if (m_flinging)
+            return;
+
         if (button.isPressed)
         {
             var position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             position.z = 0;
             m_band.PinToLocation(position);
         }
+        else if (m_band.Pinned)
+            SetFlinging();
         else
             m_band.Unpin();
     }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.otherCollider.tag == "Ground")
-        {
-            m_grounded = true;
-            StopCoroutine("CoyoteWait");
-        }
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.otherCollider.tag == "Ground")
-            StartCoroutine(CoyoteWait(coyoteTime));
-    }
-
-
 }
