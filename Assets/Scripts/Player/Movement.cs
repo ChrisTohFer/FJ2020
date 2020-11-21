@@ -18,6 +18,9 @@ public class Movement : MonoBehaviour
     public float drag = 10f;
     public float defaultBandLength = 1f;
     public float extendedBandLength = 4f;
+    public float swingRadius = 3f;
+    public float swingFrequency = 0.6f;
+    public float swingMaxAngle = Mathf.PI / 4f;
 
     //Public references
     public Rigidbody2D m_rigidBody;
@@ -32,6 +35,7 @@ public class Movement : MonoBehaviour
     bool m_flying = false;
     bool m_swinging = false;
     bool m_preparedToFling = false;
+    bool m_preparedToSwing = false;
 
     private void FixedUpdate()
     {
@@ -45,19 +49,18 @@ public class Movement : MonoBehaviour
 
     void ApplyPlayerMovement()
     {
-        if(m_grounded || m_swinging)
-        {
-            var vel = m_rigidBody.velocity;
-            var accelTick = m_movementInput.x * horizontalAccel * Time.deltaTime;
-            if (m_rigidBody.velocity.x * Mathf.Sign(accelTick) < horizontalMoveSpeed * 0.25f)
-            {
-                m_rigidBody.velocity = new Vector2(vel.x + accelTick * 5f, vel.y);
-            }
-            else if (m_rigidBody.velocity.x * Mathf.Sign(accelTick) < horizontalMoveSpeed)
-            {
-                m_rigidBody.velocity = new Vector2(vel.x + accelTick, vel.y);
-            }
+        if (!m_grounded)
+            return;
 
+        var vel = m_rigidBody.velocity;
+        var accelTick = m_movementInput.x * horizontalAccel * Time.deltaTime;
+        if (m_rigidBody.velocity.x * Mathf.Sign(accelTick) < horizontalMoveSpeed * 0.25f)
+        {
+            m_rigidBody.velocity = new Vector2(vel.x + accelTick * 5f, vel.y);
+        }
+        else if (m_rigidBody.velocity.x * Mathf.Sign(accelTick) < horizontalMoveSpeed)
+        {
+            m_rigidBody.velocity = new Vector2(vel.x + accelTick, vel.y);
         }
     }
 
@@ -102,6 +105,10 @@ public class Movement : MonoBehaviour
         if(m_band.Pinned && m_preparedToFling && m_band.StretchVector.magnitude > bandMaxStretch)
         {
             SetFlinging();
+        }
+        if (m_band.Pinned && m_preparedToSwing)
+        {
+            SetSwinging();
         }
     }
 
@@ -163,11 +170,13 @@ public class Movement : MonoBehaviour
         m_flinging = false;
         m_flying = false;
         m_swinging = true;
+        m_preparedToSwing = false;
         m_rigidBody.simulated = true;
         m_rigidBody.mass = 0.5f;
         m_rigidBody.gravityScale = defaultGravity;
         m_joint.distance = defaultBandLength;
         StopAllCoroutines();
+        StartCoroutine(Swing());
     }
 
     //Coroutines
@@ -199,6 +208,33 @@ public class Movement : MonoBehaviour
             yield return new WaitForFixedUpdate();
 
         SetAirborne();
+    }
+
+    IEnumerator Swing()
+    {
+        var pivot = m_band.pin.position;
+        var vectorFromPivot = transform.position - pivot;
+        var angle = Mathf.Asin(vectorFromPivot.x / vectorFromPivot.magnitude);
+        if (Mathf.Abs(angle) > swingMaxAngle)
+            angle = swingMaxAngle * Mathf.Sign(angle);
+
+        var phase = Mathf.Asin(angle / swingMaxAngle);
+
+        Debug.Log(pivot);
+        Debug.Log(vectorFromPivot);
+        Debug.Log(angle);
+        Debug.Log(phase);
+
+        for(; ; )   //Must end coroutine to exit loop
+        {
+            phase += Mathf.PI * 2f * swingFrequency * Time.deltaTime;
+            var targetAngle = Mathf.Sin(phase) * swingMaxAngle;
+            Debug.Log(targetAngle);
+            var targetPosition = pivot + new Vector3(Mathf.Sin(targetAngle), -Mathf.Cos(targetAngle), 0f) * swingRadius;
+            var displacement = targetPosition - transform.position;
+            m_rigidBody.velocity = displacement * 5;
+            yield return new WaitForFixedUpdate();
+        }
     }
 
     //Callbacks
@@ -241,7 +277,7 @@ public class Movement : MonoBehaviour
             var position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             position.z = 0;
             m_band.PinToLocation(position);
-            SetSwinging();
+            m_preparedToSwing = true;
         }
         else
         {

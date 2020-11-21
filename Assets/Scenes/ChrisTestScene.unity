@@ -1180,5 +1180,17 @@ PrefabInstance:
       propertyPath: m_joint
       value: 
       objectReference: {fileID: 318056616}
+    - target: {fileID: 8404794329329797562, guid: 6ddffc062aff79244b6d6a4e7abba991, type: 3}
+      propertyPath: swingRadius
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8404794329329797562, guid: 6ddffc062aff79244b6d6a4e7abba991, type: 3}
+      propertyPath: swingMaxAngle
+      value: 0.785398
+      objectReference: {fileID: 0}
+    - target: {fileID: 8404794329329797562, guid: 6ddffc062aff79244b6d6a4e7abba991, type: 3}
+      propertyPath: swingFrequency
+      value: 0.6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ddffc062aff79244b6d6a4e7abba991, type: 3}

@@ -108,9 +108,15 @@ MonoBehaviour:
   flingSpeed: 15
   maxSpeed: 8
   drag: 12
+  defaultBandLength: 1
+  extendedBandLength: 4
+  swingRadius: 5
+  swingFrequency: 1
+  swingMaxAngle: 0.785398
   m_rigidBody: {fileID: 522245006859220878}
   m_collider: {fileID: 3428903672249262607}
   m_band: {fileID: 522245006966749718}
+  m_joint: {fileID: 0}
 --- !u!1 &522245006966749716
 GameObject:
   m_ObjectHideFlags: 0
