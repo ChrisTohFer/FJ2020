@@ -107,7 +107,7 @@ MonoBehaviour:
   maxSpeed: 8
   drag: 12
   m_rigidBody: {fileID: 522245006859220878}
-  m_collider: {fileID: 522245007136456641}
+  m_collider: {fileID: 3428903672249262607}
   m_band: {fileID: 522245006966749718}
 --- !u!1 &522245006966749716
 GameObject:
@@ -168,7 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 522245007136456671}
   - component: {fileID: 522245007136456670}
-  - component: {fileID: 522245007136456641}
+  - component: {fileID: 3428903672249262607}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -185,7 +185,7 @@ Transform:
   m_GameObject: {fileID: 522245007136456669}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 522245006859220879}
   m_RootOrder: 0
@@ -241,7 +241,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &522245007136456641
+--- !u!70 &3428903672249262607
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -255,7 +255,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.39, y: 0.48}
+  m_Size: {x: 0.609375, y: 0.75}
   m_Direction: 0
 --- !u!1 &522245007726044137
 GameObject:
@@ -283,7 +283,7 @@ Transform:
   m_GameObject: {fileID: 522245007726044137}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: 0}
-  m_LocalScale: {x: 1.5769687, y: 2.5, z: 1}
+  m_LocalScale: {x: 1, y: 1.25, z: 1}
   m_Children: []
   m_Father: {fileID: 522245006966749717}
   m_RootOrder: 0

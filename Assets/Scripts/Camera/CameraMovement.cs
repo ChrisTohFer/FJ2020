@@ -18,12 +18,15 @@ public class CameraMovement : MonoBehaviour
         var speedTick = (minSpeed + speedIncreasePerDistance * difference.magnitude) * Time.fixedDeltaTime;
 
         if (speedTick > difference.magnitude)
-            Camera.main.transform.position = targetPos + Vector3.back * 10f;
+            Camera.main.transform.position = targetPos;
         else
         {
             var velocityTick = (Vector3)difference.normalized * speedTick;
             Camera.main.transform.position += velocityTick;
         }
+
+        //Make sure camera doesn't move in z
+        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, -10f);
     }
 
     public Vector3 CalculateCameraTarget()
