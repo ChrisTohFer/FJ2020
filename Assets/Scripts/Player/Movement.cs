@@ -21,6 +21,7 @@ public class Movement : MonoBehaviour
     public float swingRadius = 3f;
     public float swingFrequency = 0.6f;
     public float swingMaxAngle = Mathf.PI / 4f;
+    public bool debugFlyMode = false;
 
     //Public references
     public Rigidbody2D m_rigidBody;
@@ -261,7 +262,13 @@ public class Movement : MonoBehaviour
             var mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             mousePosition.z = 0;
             var grapplePoint = DetectGrapplePointAtMouse(mousePosition);
-            if(grapplePoint != null && grapplePoint.canFling && grapplePoint.InRange(transform))
+            if(debugFlyMode)
+            {
+                m_band.PinToLocation(mousePosition);
+                m_preparedToFling = true;
+                m_joint.distance = extendedBandLength;
+            }
+            else if(grapplePoint != null && grapplePoint.canFling && grapplePoint.InRange(transform))
             {
                 m_band.PinToLocation(grapplePoint.transform.position);
                 m_preparedToFling = true;
@@ -295,6 +302,11 @@ public class Movement : MonoBehaviour
             var mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             mousePosition.z = 0;
             var grapplePoint = DetectGrapplePointAtMouse(mousePosition);
+            if (debugFlyMode)
+            {
+                m_band.PinToLocation(mousePosition);
+                m_preparedToSwing = true;
+            }
             if (grapplePoint != null && grapplePoint.canSwing && grapplePoint.InRange(transform))
             {
                 m_band.PinToLocation(grapplePoint.transform.position);
