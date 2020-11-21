@@ -16,11 +16,14 @@ public class Movement : MonoBehaviour
     public float flingSpeed = 15f;
     public float maxSpeed = 15f;
     public float drag = 10f;
+    public float defaultBandLength = 1f;
+    public float extendedBandLength = 4f;
 
     //Public references
     public Rigidbody2D m_rigidBody;
     public Collider2D m_collider;
     public RubberBand m_band;
+    public DistanceJoint2D m_joint;
 
     //Private data
     Vector2 m_movementInput;
@@ -126,6 +129,7 @@ public class Movement : MonoBehaviour
         m_rigidBody.simulated = true;
         m_rigidBody.gravityScale = 0f;
         StopAllCoroutines();
+        m_joint.distance = defaultBandLength;
         StartCoroutine(FlingToPin());
     }
     void SetFlying(Vector2 velocity)
@@ -191,13 +195,21 @@ public class Movement : MonoBehaviour
             var position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             position.z = 0;
             m_band.PinToLocation(position);
+            m_joint.distance = extendedBandLength;
         }
         else if (m_band.Pinned)
             SetFlinging();
-        else
+        else if (m_band.Slinging)
         {
             m_band.PinToLocationInstant(m_band.slingDestination);
             SetFlinging();
         }
+    }
+
+    private void OnRightClick(InputValue button)
+    {
+        if (m_flinging)
+            return;
+
     }
 }

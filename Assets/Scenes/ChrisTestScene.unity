@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!232 &318056616 stripped
+DistanceJoint2D:
+  m_CorrespondingSourceObject: {fileID: 8404794328318269803, guid: 6ddffc062aff79244b6d6a4e7abba991, type: 3}
+  m_PrefabInstance: {fileID: 8404794328259133306}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &426124571
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,5 +1176,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoreSceneComponents
       objectReference: {fileID: 0}
+    - target: {fileID: 8404794329329797562, guid: 6ddffc062aff79244b6d6a4e7abba991, type: 3}
+      propertyPath: m_joint
+      value: 
+      objectReference: {fileID: 318056616}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ddffc062aff79244b6d6a4e7abba991, type: 3}

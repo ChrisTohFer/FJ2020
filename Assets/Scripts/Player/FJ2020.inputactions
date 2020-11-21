@@ -28,6 +28,14 @@
                     "expectedControlType": "Digital",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "RightClick",
+                    "type": "Value",
+                    "id": "0893f9a0-c331-481d-8638-21502065645c",
+                    "expectedControlType": "Digital",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -204,6 +212,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ab2f9a05-d1e8-4cd1-8f7a-c12a9a522ead",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "RightClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

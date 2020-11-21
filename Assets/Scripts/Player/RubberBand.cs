@@ -22,7 +22,7 @@ public class RubberBand : MonoBehaviour
 
     public bool Pinned
     {
-        get { return !rigidBody.simulated && !m_slinging; }
+        get { return rigidBody.constraints == RigidbodyConstraints2D.FreezeAll && !m_slinging; }
     }
 
     public bool Slinging
@@ -46,19 +46,19 @@ public class RubberBand : MonoBehaviour
 
     public void PinToLocation(Vector3 pos)
     {
-        rigidBody.simulated = false;
+        rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
         StartCoroutine(BandSling(slingTime, pos));
     }
     public void PinToLocationInstant(Vector3 pos)
     {
-        rigidBody.simulated = false;
+        rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
         pin.position = pos;
         StopCoroutine("BandSling");
         m_slinging = false;
     }
     public void Unpin()
     {
-        rigidBody.simulated = true;
+        rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
         StopCoroutine("BandSling");
         m_slinging = false;
     }
