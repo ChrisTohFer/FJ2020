@@ -11,13 +11,31 @@ public class RubberBand : MonoBehaviour
     public Transform pin;
     public Rigidbody2D rigidBody;
 
+    //
+    bool m_slinging = false;
+
+    public bool Pinned
+    {
+        get { return !rigidBody.simulated && !m_slinging; }
+    }
+
+    public bool Slinging
+    {
+        get { return m_slinging; }
+    }
+
+    public Vector2 StretchVector
+    {
+        get { return pin.position - transform.position; }
+    }
+
     private void Update()
     {
         var difference = pin.position - transform.position;
         var angle = -Vector2.SignedAngle(difference, Vector2.right);
 
         transform.eulerAngles = new Vector3(0f, 0f, angle);
-        transform.localScale = new Vector3(difference.magnitude, 1f / Mathf.Pow(difference.magnitude, thinningPower));
+        transform.localScale = new Vector3(difference.magnitude, 1f / Mathf.Pow(Mathf.Max(difference.magnitude, 1f), thinningPower));
     }
 
     public void PinToLocation(Vector3 pos)
@@ -29,6 +47,7 @@ public class RubberBand : MonoBehaviour
     {
         rigidBody.simulated = true;
         StopCoroutine("BandSling");
+        m_slinging = false;
     }
 
     //Coroutines
@@ -37,22 +56,23 @@ public class RubberBand : MonoBehaviour
     {
         if(duration == 0)
         {
-            Debug.Log("Duration0");
             pin.position = destination;
             yield break;
         }
 
-        var originalPosition = pin.transform.position;
+        m_slinging = true;
+
+       var originalPosition = pin.transform.position;
         var difference = destination - originalPosition;
-        Debug.Log("Start:" + originalPosition);
         for (float time = Time.fixedDeltaTime; time < duration; time += Time.fixedDeltaTime)
         {
             pin.position = originalPosition + (difference * time / duration);
-            Debug.Log("Intermediate point:" + pin.position);
 
             yield return new WaitForFixedUpdate();
         }
         pin.position = destination;
+
+        m_slinging = false;
     }
     
 }
