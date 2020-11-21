@@ -220,21 +220,27 @@ public class Movement : MonoBehaviour
 
         var phase = Mathf.Asin(angle / swingMaxAngle);
 
-        Debug.Log(pivot);
-        Debug.Log(vectorFromPivot);
-        Debug.Log(angle);
-        Debug.Log(phase);
-
         for(; ; )   //Must end coroutine to exit loop
         {
             phase += Mathf.PI * 2f * swingFrequency * Time.deltaTime;
             var targetAngle = Mathf.Sin(phase) * swingMaxAngle;
-            Debug.Log(targetAngle);
             var targetPosition = pivot + new Vector3(Mathf.Sin(targetAngle), -Mathf.Cos(targetAngle), 0f) * swingRadius;
             var displacement = targetPosition - transform.position;
             m_rigidBody.velocity = displacement * 5;
             yield return new WaitForFixedUpdate();
         }
+    }
+
+    GrapplePoint DetectGrapplePointAtMouse(Vector3 mousePosition)
+    {
+        var hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            return hit.collider.GetComponent<GrapplePoint>();
+        }
+        
+        return null;
     }
 
     //Callbacks
@@ -247,20 +253,32 @@ public class Movement : MonoBehaviour
 
     private void OnClick(InputValue button)
     {
-        if (m_flinging || m_swinging)
+        if (m_flinging || m_swinging || m_preparedToSwing)
             return;
 
         if (button.isPressed)
         {
-            var position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            position.z = 0;
-            m_band.PinToLocation(position);
-            m_joint.distance = extendedBandLength;
-            m_preparedToFling = true;
+            var mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            mousePosition.z = 0;
+            var grapplePoint = DetectGrapplePointAtMouse(mousePosition);
+            if(grapplePoint != null && grapplePoint.canFling && grapplePoint.InRange(transform))
+            {
+                m_band.PinToLocation(grapplePoint.transform.position);
+                m_preparedToFling = true;
+                m_joint.distance = extendedBandLength;
+            }
+            else if((mousePosition - transform.position).magnitude > extendedBandLength)
+            {
+                m_band.SlingAtLocation(transform.position + (mousePosition - transform.position).normalized * extendedBandLength);
+            }
+            else
+            {
+                m_band.SlingAtLocation(mousePosition);
+            }
         }
-        else if (m_band.Pinned)
+        else if (m_band.Pinned && m_preparedToFling)
             SetFlinging();
-        else if (m_band.Slinging)
+        else if (m_band.Slinging && m_preparedToFling)
         {
             m_band.PinToLocationInstant(m_band.slingDestination);
             SetFlinging();
@@ -269,15 +287,27 @@ public class Movement : MonoBehaviour
 
     private void OnRightClick(InputValue button)
     {
-        if (m_flinging || m_preparedToFling)
+        if (m_flinging || m_preparedToFling || m_preparedToFling)
             return;
 
         if (button.isPressed)
         {
-            var position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            position.z = 0;
-            m_band.PinToLocation(position);
-            m_preparedToSwing = true;
+            var mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            mousePosition.z = 0;
+            var grapplePoint = DetectGrapplePointAtMouse(mousePosition);
+            if (grapplePoint != null && grapplePoint.canSwing && grapplePoint.InRange(transform))
+            {
+                m_band.PinToLocation(grapplePoint.transform.position);
+                m_preparedToSwing = true;
+            }
+            else if ((mousePosition - transform.position).magnitude > extendedBandLength)
+            {
+                m_band.SlingAtLocation(transform.position + (mousePosition - transform.position).normalized * extendedBandLength);
+            }
+            else
+            {
+                m_band.SlingAtLocation(mousePosition);
+            }
         }
         else
         {

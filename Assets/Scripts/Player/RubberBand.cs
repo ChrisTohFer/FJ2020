@@ -52,6 +52,12 @@ public class RubberBand : MonoBehaviour
     public void PinToLocation(Vector3 pos)
     {
         rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+        StopCoroutine("BandSling");
+        StartCoroutine(BandSling(slingTime, pos));
+    }
+    public void SlingAtLocation(Vector3 pos)
+    {
+        StopCoroutine("BandSling");
         StartCoroutine(BandSling(slingTime, pos));
     }
     public void PinToLocationInstant(Vector3 pos)
