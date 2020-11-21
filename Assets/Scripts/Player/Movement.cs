@@ -44,15 +44,12 @@ public class Movement : MonoBehaviour
 
     void ApplyDrag()
     {
-        Debug.Log("Enter drag function");
         if (m_flinging || m_rigidBody.velocity.magnitude < maxSpeed)
             return;
 
         var excessVelocity = m_rigidBody.velocity.normalized * (m_rigidBody.velocity.magnitude - maxSpeed);
-
-        Debug.Log("ExcessVelocity:" + excessVelocity);
-
         var dragPerFrame = drag * Time.fixedDeltaTime;
+
         if (excessVelocity.magnitude < dragPerFrame)
             m_rigidBody.velocity -= excessVelocity;
         else
