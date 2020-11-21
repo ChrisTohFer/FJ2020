@@ -25,6 +25,11 @@ public class RubberBand : MonoBehaviour
         get { return rigidBody.constraints == RigidbodyConstraints2D.FreezeAll && !m_slinging; }
     }
 
+    public bool Occupied
+    {
+        get { return Slinging || Pinned; }
+    }
+
     public bool Slinging
     {
         get { return m_slinging; }

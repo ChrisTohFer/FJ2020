@@ -30,6 +30,8 @@ public class Movement : MonoBehaviour
     bool m_grounded = false;
     bool m_flinging = false;
     bool m_flying = false;
+    bool m_swinging = false;
+    bool m_preparedToFling = false;
 
     private void FixedUpdate()
     {
@@ -43,7 +45,7 @@ public class Movement : MonoBehaviour
 
     void ApplyPlayerMovement()
     {
-        if(m_grounded)
+        if(m_grounded || m_swinging)
         {
             var vel = m_rigidBody.velocity;
             var accelTick = m_movementInput.x * horizontalAccel * Time.deltaTime;
@@ -75,7 +77,7 @@ public class Movement : MonoBehaviour
 
     void CheckGrounded()
     {
-        if (m_flinging || m_flying)
+        if (m_flinging || m_flying || m_swinging)
             return;
 
         Vector2 rayStart = transform.position + Vector3.down * (m_collider.bounds.extents.y + 0.1f);
@@ -97,7 +99,7 @@ public class Movement : MonoBehaviour
 
     void CheckBandState()
     {
-        if(m_band.Pinned && m_band.StretchVector.magnitude > bandMaxStretch)
+        if(m_band.Pinned && m_preparedToFling && m_band.StretchVector.magnitude > bandMaxStretch)
         {
             SetFlinging();
         }
@@ -108,7 +110,9 @@ public class Movement : MonoBehaviour
         m_grounded = true;
         m_flinging = false;
         m_flying = false;
+        m_swinging = false;
         m_rigidBody.simulated = true;
+        m_rigidBody.mass = 1f;
         m_rigidBody.gravityScale = defaultGravity;
         StopAllCoroutines();
     }
@@ -117,8 +121,11 @@ public class Movement : MonoBehaviour
         m_grounded = false;
         m_flinging = false;
         m_flying = false;
+        m_swinging = false;
         m_rigidBody.simulated = true;
+        m_rigidBody.mass = 1f;
         m_rigidBody.gravityScale = defaultGravity;
+        m_joint.distance = defaultBandLength;
         StopAllCoroutines();
     }
     void SetFlinging()
@@ -126,10 +133,13 @@ public class Movement : MonoBehaviour
         m_grounded = false;
         m_flinging = true;
         m_flying = false;
+        m_swinging = false;
+        m_preparedToFling = false;
         m_rigidBody.simulated = true;
+        m_rigidBody.mass = 1f;
         m_rigidBody.gravityScale = 0f;
-        StopAllCoroutines();
         m_joint.distance = defaultBandLength;
+        StopAllCoroutines();
         StartCoroutine(FlingToPin());
     }
     void SetFlying(Vector2 velocity)
@@ -137,12 +147,27 @@ public class Movement : MonoBehaviour
         m_grounded = false;
         m_flinging = false;
         m_flying = true;
+        m_swinging = false;
         m_rigidBody.simulated = true;
+        m_rigidBody.mass = 1f;
         m_rigidBody.gravityScale = flyingGravity;
         m_rigidBody.velocity = velocity;
+        m_joint.distance = defaultBandLength;
         StopAllCoroutines();
         StartCoroutine(Fly());
         m_band.Unpin();
+    }
+    void SetSwinging()
+    {
+        m_grounded = false;
+        m_flinging = false;
+        m_flying = false;
+        m_swinging = true;
+        m_rigidBody.simulated = true;
+        m_rigidBody.mass = 0.5f;
+        m_rigidBody.gravityScale = defaultGravity;
+        m_joint.distance = defaultBandLength;
+        StopAllCoroutines();
     }
 
     //Coroutines
@@ -187,7 +212,7 @@ public class Movement : MonoBehaviour
 
     private void OnClick(InputValue button)
     {
-        if (m_flinging)
+        if (m_flinging || m_swinging)
             return;
 
         if (button.isPressed)
@@ -196,6 +221,7 @@ public class Movement : MonoBehaviour
             position.z = 0;
             m_band.PinToLocation(position);
             m_joint.distance = extendedBandLength;
+            m_preparedToFling = true;
         }
         else if (m_band.Pinned)
             SetFlinging();
@@ -208,8 +234,20 @@ public class Movement : MonoBehaviour
 
     private void OnRightClick(InputValue button)
     {
-        if (m_flinging)
+        if (m_flinging || m_preparedToFling)
             return;
 
+        if (button.isPressed)
+        {
+            var position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            position.z = 0;
+            m_band.PinToLocation(position);
+            SetSwinging();
+        }
+        else
+        {
+            SetAirborne();
+            m_band.Unpin();
+        }
     }
 }
