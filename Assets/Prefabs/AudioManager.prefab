@@ -47,11 +47,3 @@ MonoBehaviour:
   soundEffects:
   - name: 
     soundEffect: {fileID: 0}
-  - name: 
-    soundEffect: {fileID: 0}
-  - name: 
-    soundEffect: {fileID: 0}
-  - name: 
-    soundEffect: {fileID: 0}
-  - name: 
-    soundEffect: {fileID: 0}
