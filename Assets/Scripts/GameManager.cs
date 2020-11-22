@@ -37,11 +37,14 @@ public class GameManager : MonoBehaviour
                 PlayerPrefs.SetFloat("HighScore", timeStart);
             }
             
+            // pause the timer
 
-            // Load the main menu
+            // Load the score screen
 
 
         }
     }
+
+
 }
 
