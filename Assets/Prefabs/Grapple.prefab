@@ -100,6 +100,10 @@ MonoBehaviour:
   canFling: 1
   canSwing: 1
   radius: 6
+  inRangeScaleMin: 1.3
+  inRangeScaleMax: 1.5
+  inRangeFrequency: 1
+  transformToScale: {fileID: 0}
 --- !u!114 &7297225113977691417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,5 +144,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.64, y: 0.64}
+  m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0

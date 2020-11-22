@@ -50,7 +50,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -110,9 +110,9 @@ MonoBehaviour:
   drag: 12
   defaultBandLength: 1
   extendedBandLength: 4
-  swingRadius: 5
-  swingFrequency: 1
-  swingMaxAngle: 0.785398
+  swingRadius: 3
+  swingFrequency: 0.6
+  swingMaxAngle: 0.7853982
   swingSpeedBoost: 15
   swingTolerance: 0.7853982
   debugFlyMode: 0
