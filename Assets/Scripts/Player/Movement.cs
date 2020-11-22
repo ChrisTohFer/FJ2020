@@ -21,6 +21,8 @@ public class Movement : MonoBehaviour
     public float swingRadius = 3f;
     public float swingFrequency = 0.6f;
     public float swingMaxAngle = Mathf.PI / 4f;
+    public float swingSpeedBoost = 15f;
+    public float swingTolerance = Mathf.PI / 4f;
     public bool debugFlyMode = false;
 
     //Public references
@@ -226,15 +228,33 @@ public class Movement : MonoBehaviour
 
         var phase = Mathf.Asin(angle / swingMaxAngle);
 
-        for(; ; )   //Must end coroutine to exit loop
+        Vector3 targetPosition;
+        do
         {
             phase += Mathf.PI * 2f * swingFrequency * Time.deltaTime;
+            if (phase > Mathf.PI * 2f)
+                phase -= Mathf.PI * 2f;
             var targetAngle = Mathf.Sin(phase) * swingMaxAngle;
-            var targetPosition = pivot + new Vector3(Mathf.Sin(targetAngle), -Mathf.Cos(targetAngle), 0f) * swingRadius;
+            targetPosition = pivot + new Vector3(Mathf.Sin(targetAngle), -Mathf.Cos(targetAngle), 0f) * swingRadius;
             var displacement = targetPosition - transform.position;
             m_rigidBody.velocity = displacement * 5;
             yield return new WaitForFixedUpdate();
+        } while (m_swinging);
+
+        if (Vector3.Distance(targetPosition, transform.position) < 1.5f)
+        {
+            if (phase <= Mathf.PI / 2f && phase > Mathf.PI / 2f - swingTolerance)
+            {
+                m_rigidBody.velocity = new Vector3(Mathf.Cos(swingMaxAngle), Mathf.Sin(swingMaxAngle), 0f) * swingSpeedBoost;
+            }
+            else if (phase <= 3f * Mathf.PI / 2f && phase > 3f * Mathf.PI / 2f - swingTolerance)
+            {
+                m_rigidBody.velocity = new Vector3(-Mathf.Cos(swingMaxAngle), Mathf.Sin(swingMaxAngle), 0f) * swingSpeedBoost;
+            }
         }
+
+        m_band.Unpin();
+        SetAirborne();
     }
 
     GrapplePoint DetectGrapplePointAtMouse(Vector3 mousePosition)
@@ -325,6 +345,10 @@ public class Movement : MonoBehaviour
             {
                 m_band.SlingAtLocation(mousePosition);
             }
+        }
+        else if(m_swinging)
+        {
+            m_swinging = false;
         }
         else
         {
