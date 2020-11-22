@@ -13,11 +13,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7297225113977691418, guid: 7291d01dd84a0324a84b42c94ba0e948, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.08
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7297225113977691418, guid: 7291d01dd84a0324a84b42c94ba0e948, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.1230626
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7297225113977691418, guid: 7291d01dd84a0324a84b42c94ba0e948, type: 3}
       propertyPath: m_LocalPosition.z
@@ -57,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7297225113977691492, guid: 7291d01dd84a0324a84b42c94ba0e948, type: 3}
       propertyPath: m_Name
-      value: Grapple_Swing
+      value: Grapple_Swing Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7297225113977691493, guid: 7291d01dd84a0324a84b42c94ba0e948, type: 3}
       propertyPath: m_Color.b

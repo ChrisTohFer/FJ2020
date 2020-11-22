@@ -99,7 +99,7 @@ public class RubberBand : MonoBehaviour
         slingDestination = destination;
         m_slinging = true;
 
-       var originalPosition = pin.transform.position;
+        var originalPosition = pin.transform.position;
         var difference = destination - originalPosition;
         for (float time = Time.fixedDeltaTime; time < duration; time += Time.fixedDeltaTime)
         {

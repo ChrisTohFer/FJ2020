@@ -43,6 +43,8 @@ public class Movement : MonoBehaviour
     bool m_preparedToFling = false;
     bool m_preparedToSwing = false;
 
+    bool m_swingCoroutineActive = false;
+
     private void Awake()
     {
         playerTransform = transform;
@@ -145,6 +147,7 @@ public class Movement : MonoBehaviour
         m_flying = false;
         m_swinging = false;
         m_preparedToSwing = false;
+        m_swingCoroutineActive = false;
         m_rigidBody.simulated = true;
         m_rigidBody.mass = 1f;
         m_rigidBody.gravityScale = defaultGravity;
@@ -237,6 +240,8 @@ public class Movement : MonoBehaviour
         var phase = Mathf.Asin(angle / swingMaxAngle);
         if (angle > 0 && angle < Mathf.PI)
             phase = Mathf.PI - phase;
+
+        m_swingCoroutineActive = true;
 
         Vector3 targetPosition;
         do
@@ -356,7 +361,7 @@ public class Movement : MonoBehaviour
                 m_band.SlingAtLocation(mousePosition);
             }
         }
-        else if(m_swinging)
+        else if (m_swinging && m_swingCoroutineActive)
         {
             m_swinging = false;
         }
