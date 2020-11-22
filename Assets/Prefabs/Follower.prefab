@@ -51,6 +51,7 @@ MonoBehaviour:
   followDistance: 0.5
   followBaseSpeed: 1
   followSpeedPerDistance: 4
+  followerCollider: {fileID: 5859178115999963130}
 --- !u!58 &5859178115999963130
 CircleCollider2D:
   m_ObjectHideFlags: 0
