@@ -216,7 +216,12 @@ public class Movement : MonoBehaviour
         m_rigidBody.velocity = velocity;
 
         while (direction.x * m_band.StretchVector.x > 0 && direction.y * m_band.StretchVector.y > 0) //if either x or y flip sign we have finished flinging
+        {
+            direction = m_band.StretchVector.normalized;
+            velocity = direction.normalized * flingSpeed;
+            m_rigidBody.velocity = velocity;
             yield return new WaitForFixedUpdate();
+        }
 
         SetFlying(velocity);
     }
