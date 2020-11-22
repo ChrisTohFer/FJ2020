@@ -221,6 +221,14 @@ public class Movement : MonoBehaviour
             velocity = direction.normalized * flingSpeed;
             m_rigidBody.velocity = velocity;
             yield return new WaitForFixedUpdate();
+
+            //Check if ground is in the way
+            var hit = Physics2D.Raycast(
+                (Vector2)transform.position + m_band.StretchVector.normalized * 1.5f,
+                 m_band.StretchVector,
+                 m_band.StretchVector.magnitude);
+            if (hit.collider != null && hit.collider.gameObject.tag == "Ground")
+                break;
         }
 
         SetFlying(velocity);
@@ -246,8 +254,6 @@ public class Movement : MonoBehaviour
         if (angle > 0 && angle < Mathf.PI)
             phase = Mathf.PI - phase;
 
-        int failedFrames = 0; //Number of frames in a row that we didn't get close (within 1.5) to the target
-
         m_swingCoroutineActive = true;
 
         Vector3 targetPosition;
@@ -260,16 +266,10 @@ public class Movement : MonoBehaviour
             targetPosition = pivot + new Vector3(Mathf.Sin(targetAngle), -Mathf.Cos(targetAngle), 0f) * swingRadius;
             var displacement = targetPosition - transform.position;
             m_rigidBody.velocity = displacement * 5;
-            if (displacement.magnitude > 1f)
-                ++failedFrames;
-            else
-                failedFrames = 0;
             yield return new WaitForFixedUpdate();
-            if (failedFrames >= 20)
-                m_swinging = false;
         } while (m_swinging);
 
-        if (Vector3.Distance(targetPosition, transform.position) < 1.5f && failedFrames < 20)
+        if (Vector3.Distance(targetPosition, transform.position) < 1.5f)
         {
             if (phase <= Mathf.PI / 2f && phase > Mathf.PI / 2f - swingTolerance)
             {
@@ -384,5 +384,10 @@ public class Movement : MonoBehaviour
             m_band.Unpin();
             m_preparedToSwing = false;
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        m_swinging = false;
     }
 }
