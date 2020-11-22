@@ -113,6 +113,7 @@ MonoBehaviour:
   swingRadius: 5
   swingFrequency: 1
   swingMaxAngle: 0.785398
+  debugFlyMode: 0
   m_rigidBody: {fileID: 522245006859220878}
   m_collider: {fileID: 3428903672249262607}
   m_band: {fileID: 522245006966749718}
@@ -166,6 +167,7 @@ MonoBehaviour:
   slingTime: 0.1
   pin: {fileID: 0}
   rigidBody: {fileID: 0}
+  sprite: {fileID: 522245007726044139}
 --- !u!1 &522245007136456669
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +293,7 @@ Transform:
   m_GameObject: {fileID: 522245007726044137}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1.25, z: 1}
+  m_LocalScale: {x: 1, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 522245006966749717}
   m_RootOrder: 0
@@ -336,8 +338,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1850750137083921494, guid: ea6308bbc2b014f40b1f28727b87225b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: f8c16b0938b3db94691b1976a3092622, type: 3}
+  m_Color: {r: 0.6886792, g: 0.33894977, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

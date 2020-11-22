@@ -38,6 +38,11 @@ public class Movement : MonoBehaviour
     bool m_preparedToFling = false;
     bool m_preparedToSwing = false;
 
+    private void Start()
+    {
+        m_band.maxStretch = bandMaxStretch;
+    }
+
     private void FixedUpdate()
     {
         CheckGrounded();

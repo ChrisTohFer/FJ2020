@@ -10,6 +10,11 @@ public class RubberBand : MonoBehaviour
     public float slingTime = 0.2f;
     public Transform pin;
     public Rigidbody2D rigidBody;
+    public SpriteRenderer sprite;
+    public float maxStretch
+    {
+        set { m_maxStretch = value; }
+    }
     public Vector3 slingDestination
     {
         get { return m_slingDestination; }
@@ -17,8 +22,10 @@ public class RubberBand : MonoBehaviour
     }
 
     //
+    float m_maxStretch;
     Vector3 m_slingDestination;
     bool m_slinging = false;
+    Color bandColor;
 
     public bool Pinned
     {
@@ -40,6 +47,11 @@ public class RubberBand : MonoBehaviour
         get { return pin.position - transform.position; }
     }
 
+    private void Start()
+    {
+        bandColor = sprite.color;
+    }
+
     private void Update()
     {
         var difference = pin.position - transform.position;
@@ -47,6 +59,7 @@ public class RubberBand : MonoBehaviour
 
         transform.eulerAngles = new Vector3(0f, 0f, angle);
         transform.localScale = new Vector3(difference.magnitude, 1f / Mathf.Pow(Mathf.Max(difference.magnitude, 1f), thinningPower));
+        sprite.color = Color.Lerp(bandColor, Color.white, Mathf.Pow((difference.magnitude - naturalLength) / (m_maxStretch - naturalLength),3f));
     }
 
     public void PinToLocation(Vector3 pos)
