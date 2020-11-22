@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c3ce8abf8f26e549a5bf85d7b8660c8, type: 3}
-  m_Name: SoundLoop
+  m_Name: TestSoundLoop
   m_EditorClassIdentifier: 
   sfx: {fileID: 0}
   audioOutput: {fileID: 0}

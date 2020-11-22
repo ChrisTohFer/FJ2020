@@ -8,11 +8,17 @@ public class ChecpointController : MonoBehaviour
     public Sprite greenFlag;
     private SpriteRenderer checkpointSpriteRenderer;
     public bool checkpointReached;
-    public Vector3 currentrespawnPoint;
+    public static Vector3 lastCheckPointReached;
+    public bool startCheckPoint;
+    //public Vector3 currentrespawnPoint;
     // Start is called before the first frame update
     void Start()
     {
         checkpointSpriteRenderer = GetComponent<SpriteRenderer>();
+        if(startCheckPoint == true)
+        {
+            lastCheckPointReached = transform.position;
+        }
     }
 
 
@@ -22,7 +28,9 @@ public class ChecpointController : MonoBehaviour
         {
             checkpointSpriteRenderer.sprite = greenFlag;
             checkpointReached = true;
-            currentrespawnPoint = other.transform.position;
+            lastCheckPointReached = transform.position;
+            // set to checkpoint location
+            //currentrespawnPoint = other.transform.position;
         }
     }
 }

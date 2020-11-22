@@ -2,13 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
     public float timeStart;
+    public PlayerInput playerRef;
+    public Rigidbody2D playerRb;
     public Text textBox;
     public Text highScore;
+    public bool timerActive = false;
+    public GameObject completeStageUI;
     public bool LevelComplete = false;
+    public float LoadSceneTimeSeconds = 10f;
 
     // Start is called before the first frame update
     void Start()
@@ -20,8 +27,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeStart += Time.deltaTime;
-        textBox.text = timeStart.ToString("F2");
+        if (timerActive == false)
+        {
+            timeStart += Time.deltaTime;
+            textBox.text = timeStart.ToString("F2");
+            
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -30,21 +42,44 @@ public class GameManager : MonoBehaviour
         {
             // set game state to done 
             LevelComplete = true;
-
-            // store our time 
-            if (timeStart < PlayerPrefs.GetFloat("HighScore", 0))
-            {
-                PlayerPrefs.SetFloat("HighScore", timeStart);
-            }
-            
-            // pause the timer
-
-            // Load the score screen
-
+            LevelCompleted();
 
         }
     }
 
+    public void LevelCompleted()
+    {
+        if(LevelComplete == true)
+        {
+            // store our time 
+            
+            if (timeStart < PlayerPrefs.GetFloat("HighScore", 0))
+            {
+                PlayerPrefs.SetFloat("HighScore", timeStart);
+                
+            }
 
+            // pause the timer
+            timerActive = !timerActive;
+
+            // disable player control 
+            playerRb.velocity = Vector3.zero;
+            playerRef = Movement.playerTransform.GetComponent<PlayerInput>();
+            playerRef.enabled = false;
+            
+            // Load the score screen
+            completeStageUI.SetActive(true);
+
+            // load next scene after short delay
+            //Invoke("LoadNextLevel", LoadSceneTimeSeconds);
+
+        }
+    }
+
+    public void LoadNextLevel()
+    {
+        // load next scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }
 

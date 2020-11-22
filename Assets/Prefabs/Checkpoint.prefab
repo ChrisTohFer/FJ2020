@@ -125,4 +125,4 @@ MonoBehaviour:
   redFlag: {fileID: -9215093599826259586, guid: ea6308bbc2b014f40b1f28727b87225b, type: 3}
   greenFlag: {fileID: -8699793665822191185, guid: ea6308bbc2b014f40b1f28727b87225b, type: 3}
   checkpointReached: 0
-  currentrespawnPoint: {x: 0, y: 0, z: 0}
+  startCheckPoint: 0
