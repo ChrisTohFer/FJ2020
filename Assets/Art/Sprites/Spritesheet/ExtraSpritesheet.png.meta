@@ -44,6 +44,18 @@ TextureImporter:
   - first:
       213: 2491178047246300017
     second: ExtraSpritesheet_7
+  - first:
+      213: 113006981608937483
+    second: ExtraSpritesheet_6
+  - first:
+      213: -6544612682532854908
+    second: ExtraSpritesheet_7
+  - first:
+      213: 5132909066141940854
+    second: ExtraSpritesheet_8
+  - first:
+      213: 7155503152130255568
+    second: ExtraSpritesheet_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -135,7 +147,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 136
+        y: 236
         width: 64
         height: 64
       alignment: 0
@@ -156,7 +168,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 65
-        y: 136
+        y: 236
         width: 64
         height: 64
       alignment: 0
@@ -177,7 +189,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 130
-        y: 136
+        y: 236
         width: 64
         height: 64
       alignment: 0
@@ -198,7 +210,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 70
+        y: 170
         width: 64
         height: 64
       alignment: 0
@@ -219,7 +231,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 65
-        y: 70
+        y: 170
         width: 64
         height: 64
       alignment: 0
@@ -240,7 +252,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 131
-        y: 70
+        y: 170
         width: 64
         height: 64
       alignment: 0
@@ -261,7 +273,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 4
+        y: 104
         width: 64
         height: 64
       alignment: 0
@@ -271,8 +283,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa01476d182087fe0800000000000000
-      internalID: -1191199344767528790
+      spriteID: b0890f3404b719100800000000000000
+      internalID: 113006981608937483
       vertices: []
       indices: 
       edges: []
@@ -282,7 +294,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 65
-        y: 4
+        y: 104
         width: 64
         height: 64
       alignment: 0
@@ -292,8 +304,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 173fd523c31729220800000000000000
-      internalID: 2491178047246300017
+      spriteID: 483ec19a07ddc25a0800000000000000
+      internalID: -6544612682532854908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ExtraSpritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 36
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67cb5cfa991cb3740800000000000000
+      internalID: 5132909066141940854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ExtraSpritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 36
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0da69e394347d4360800000000000000
+      internalID: 7155503152130255568
       vertices: []
       indices: 
       edges: []
