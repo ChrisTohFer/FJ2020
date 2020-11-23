@@ -640,7 +640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15bf64c22dcb414c87f1f32a927543c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelOne: DavidTestBed
+  levelOne: Tutorial
   slingTower: ChrisTestScene
 --- !u!4 &567625489
 Transform:
@@ -1561,7 +1561,7 @@ GameObject:
   - component: {fileID: 1498671937}
   - component: {fileID: 1498671936}
   - component: {fileID: 1498671938}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tilemap
   m_TagString: Ground
   m_Icon: {fileID: 0}

@@ -42,8 +42,9 @@ public class Movement : MonoBehaviour
     bool m_swinging = false;
     bool m_preparedToFling = false;
     bool m_preparedToSwing = false;
-
     bool m_swingCoroutineActive = false;
+
+    int m_collisionStayFrames = 0;
 
     private void Awake()
     {
@@ -215,20 +216,12 @@ public class Movement : MonoBehaviour
         var velocity = direction * flingSpeed;
         m_rigidBody.velocity = velocity;
 
-        while (direction.x * m_band.StretchVector.x > 0 && direction.y * m_band.StretchVector.y > 0) //if either x or y flip sign we have finished flinging
+        while (direction.x * m_band.StretchVector.x > 0 && direction.y * m_band.StretchVector.y > 0 && m_flinging) //if either x or y flip sign we have finished flinging
         {
             direction = m_band.StretchVector.normalized;
             velocity = direction.normalized * flingSpeed;
             m_rigidBody.velocity = velocity;
             yield return new WaitForFixedUpdate();
-
-            //Check if ground is in the way
-            var hit = Physics2D.Raycast(
-                (Vector2)transform.position + m_band.StretchVector.normalized * 1.5f,
-                 m_band.StretchVector,
-                 m_band.StretchVector.magnitude);
-            if (hit.collider != null && hit.collider.gameObject.tag == "Ground")
-                break;
         }
 
         SetFlying(velocity);
@@ -287,7 +280,7 @@ public class Movement : MonoBehaviour
 
     GrapplePoint DetectGrapplePointAtMouse(Vector3 mousePosition)
     {
-        var hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+        var hit = Physics2D.Raycast(mousePosition, Vector2.zero, 0, ~LayerMask.GetMask("Ground"));
 
         if (hit.collider != null)
         {
@@ -388,6 +381,34 @@ public class Movement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        m_swinging = false;
+        if (other.collider.tag == "Ground")
+        {
+            m_flinging = false;
+            m_swinging = false;
+        }
+    }
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if(other.collider.tag == "Ground")
+        {
+            if(m_collisionStayFrames > 3)
+            {
+                m_flinging = false;
+                m_swinging = false;
+            }
+            if (m_flinging || m_swinging)
+                ++m_collisionStayFrames;
+            else
+                m_collisionStayFrames = 0;
+        }
+        else
+            m_collisionStayFrames = 0;
+    }
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if(other.collider.tag == "Ground")
+        {
+            m_collisionStayFrames = 0;
+        }
     }
 }

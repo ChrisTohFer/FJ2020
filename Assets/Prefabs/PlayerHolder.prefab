@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 522245006859220878}
   - component: {fileID: 522245006859220977}
   - component: {fileID: 522245006859220976}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerHolder
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 522245006966749717}
   - component: {fileID: 522245006966749718}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BandHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 522245007136456671}
   - component: {fileID: 522245007136456670}
   - component: {fileID: 3428903672249262607}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 522245007726044138}
   - component: {fileID: 522245007726044139}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RubberBand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 1908501639010707158}
   - component: {fileID: 5413721358700018189}
   - component: {fileID: 4445906478918027334}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EyeSpy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
