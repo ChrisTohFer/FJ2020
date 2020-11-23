@@ -105,7 +105,7 @@ public class Movement : MonoBehaviour
         Debug.DrawRay(rayStart, Vector3.down * 0.1f, Color.red);
 
         RaycastHit2D result;
-        result = Physics2D.Raycast(rayStart, Vector2.down, 0.1f);
+        result = Physics2D.Raycast(rayStart, Vector2.down, 0.1f, LayerMask.GetMask("Ground"));
         if (result.transform != null)
         {
             if (result.transform.tag == "Ground")
