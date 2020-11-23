@@ -370,6 +370,7 @@ public class Movement : MonoBehaviour
         else if (m_swinging && m_swingCoroutineActive)
         {
             m_swinging = false;
+            m_band.Unpin();
         }
         else
         {

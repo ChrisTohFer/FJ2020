@@ -97,9 +97,9 @@ public class FlingTower : MonoBehaviour
         }
 
         //Calculate number of entities to add to this row
-        var grapples  = (int)(Random.value * (int)accumulatedGrapples);  //Multiply random value by number of available grapples, and round down
-        var followers = (int)(Random.value * (int)accumulatedFollowers);
-        var platforms = (int)(Random.value * (int)accumulatedPlatforms);
+        var grapples  = (int)Mathf.Min(Random.value * (int)accumulatedGrapples, (int) accumulatedGrapples / 2f);  //Multiply random value by number of available grapples, and round down
+        var followers = (int)Mathf.Min(Random.value * (int)accumulatedFollowers, (int)accumulatedFollowers / 3f);
+        var platforms = (int)Mathf.Min(Random.value * (int)accumulatedPlatforms, (int)accumulatedPlatforms / 3f);
 
         for(; grapples > 0; grapples--)
         {
