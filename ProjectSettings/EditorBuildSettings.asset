@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: d73d523caa02b2647bb02f2b9c6dc4d4
+  - enabled: 1
+    path: Assets/Scenes/FlingTower.unity
+    guid: 0e66c32beae464646ac6b96c2f4df0cc
   m_configObjects: {}

@@ -641,7 +641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelOne: Tutorial
-  slingTower: ChrisTestScene
+  slingTower: FlingTower
 --- !u!4 &567625489
 Transform:
   m_ObjectHideFlags: 0

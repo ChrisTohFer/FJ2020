@@ -5,8 +5,9 @@ using UnityEngine;
 public class Follower : MonoBehaviour
 {
     //Static
-    int previousFollowerId = 0;
+    static int previousFollowerId = 0;
     static Follower lastFollower = null;
+    static int followerCount = 0;
 
     //Public
     public SpriteRenderer mainRenderer;
@@ -20,9 +21,22 @@ public class Follower : MonoBehaviour
     Transform followTarget = null;
     bool collected = false;
 
+    private void LevelStart(int level)
+    {
+    }
+    private void OnEnable()
+    {
+        if(followerCount == 0)
+            lastFollower = null;
+        followerCount += 1;
+    }
+    private void OnDisable()
+    {
+        followerCount -= 1;
+    }
+
     private void Start()
     {
-        lastFollower = null;
         ++previousFollowerId;
         mainRenderer.sortingOrder = mainRenderer.sortingOrder + 2 * previousFollowerId;
         eyeRenderer.sortingOrder = mainRenderer.sortingOrder + 2 * previousFollowerId;
