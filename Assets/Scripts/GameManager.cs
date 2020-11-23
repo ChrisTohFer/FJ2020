@@ -7,10 +7,13 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager gminstance;
+    public int collectableScore;
+    public Text collectableText;
     public float timeStart;
     public PlayerInput playerRef;
     public Rigidbody2D playerRb;
-    public Text textBox;
+    public Text currentTime;
     public Text highScore;
     public bool timerActive = false;
     public GameObject completeStageUI;
@@ -20,7 +23,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        textBox.text = timeStart.ToString("F2");
+        if (gminstance == null)
+        {
+            gminstance = this;
+        }
+        currentTime.text = timeStart.ToString("F2");
         highScore.text = PlayerPrefs.GetFloat("HighScore", 0).ToString();
     }
 
@@ -30,7 +37,7 @@ public class GameManager : MonoBehaviour
         if (timerActive == false)
         {
             timeStart += Time.deltaTime;
-            textBox.text = timeStart.ToString("F2");
+            currentTime.text = timeStart.ToString("F2");
             
         }
 
@@ -45,6 +52,12 @@ public class GameManager : MonoBehaviour
             LevelCompleted();
 
         }
+    }
+
+    public void ChangeScore(int followerValue)
+    {
+        collectableScore += followerValue;
+        collectableText.text = "X" + collectableScore.ToString();
     }
 
     public void LevelCompleted()
