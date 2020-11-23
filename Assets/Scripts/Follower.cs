@@ -17,6 +17,7 @@ public class Follower : MonoBehaviour
     public float followBaseSpeed = 1f;
     public float followSpeedPerDistance = 2f;
     public Collider2D followerCollider;
+    public int followerValue = 1;
 
     Transform followTarget = null;
     bool collected = false;
@@ -60,6 +61,7 @@ public class Follower : MonoBehaviour
     public void Collect()
     {
         collected = true;
+        GameManager.gminstance.ChangeScore(followerValue);
         eye.target = Eye.Target.Mouse;
         followerCollider.enabled = false;
         if(lastFollower == null)
