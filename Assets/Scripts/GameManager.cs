@@ -58,20 +58,24 @@ public class GameManager : MonoBehaviour
                 PlayerPrefs.SetFloat("HighScore", timeStart);
                 
             }
+            else
+            {
+                // pause the timer
+                timerActive = !timerActive;
 
-            // pause the timer
-            timerActive = !timerActive;
+                // disable player control 
+                playerRb.velocity = Vector3.zero;
+                playerRef = Movement.playerTransform.GetComponent<PlayerInput>();
+                playerRef.enabled = false;
 
-            // disable player control 
-            playerRb.velocity = Vector3.zero;
-            playerRef = Movement.playerTransform.GetComponent<PlayerInput>();
-            playerRef.enabled = false;
-            
-            // Load the score screen
-            completeStageUI.SetActive(true);
+                // Load the score screen
+                completeStageUI.SetActive(true);
 
-            // load next scene after short delay
-            //Invoke("LoadNextLevel", LoadSceneTimeSeconds);
+                // load next scene after short delay
+                //Invoke("LoadNextLevel", LoadSceneTimeSeconds);
+            }
+
+
 
         }
     }
