@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3ce8abf8f26e549a5bf85d7b8660c8, type: 3}
   m_Name: Fling
   m_EditorClassIdentifier: 
-  sfx: {fileID: 8300000, guid: d4e9412a9f61d4d408591f2fc3a5d03f, type: 3}
+  sfx: {fileID: 8300000, guid: c50e05f9d31c5d740920cfe76e36e1d8, type: 3}
   audioOutput: {fileID: 0}
   looping: 0
   minPitch: 1

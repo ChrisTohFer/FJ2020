@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94710f15b19317f47871a24f55273363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music: {fileID: 0}
+  music: {fileID: 11400000, guid: 060be60a42e507a439956d7a303e1ef9, type: 2}
   soundEffects:
   - name: Sling
     soundEffect: {fileID: 0}
@@ -52,8 +52,8 @@ MonoBehaviour:
   - name: Swing
     soundEffect: {fileID: 0}
   - name: FollowerCheer
-    soundEffect: {fileID: 0}
+    soundEffect: {fileID: 11400000, guid: 7f63182b9a26e714bbae52e632c738e0, type: 2}
   - name: LevelSwap
     soundEffect: {fileID: 0}
   - name: Checkpoint
-    soundEffect: {fileID: 0}
+    soundEffect: {fileID: 11400000, guid: 4720393567b37b74cba95f42db2594da, type: 2}
