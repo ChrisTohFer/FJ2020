@@ -5500,7 +5500,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ^???^
+  m_text: "^Sling\n Tower"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bae36e2051dfba449a24e74aa38da29b, type: 2}
   m_sharedMaterial: {fileID: -3511812623949252291, guid: bae36e2051dfba449a24e74aa38da29b, type: 2}
