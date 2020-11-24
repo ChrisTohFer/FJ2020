@@ -16,6 +16,10 @@ public class SFXEvent : ScriptableObject
     // If it's a looping sound effect. If this is true the sound should be stopped at some point by calling this.Stop(). 
     public bool looping;
 
+    //Pitch variation
+    public float minPitch = 1f;
+    public float maxPitch = 1f;
+
     AudioSource source;
 
     DestroyAudioObjectOnComplete scriptDestroy;
@@ -28,7 +32,7 @@ public class SFXEvent : ScriptableObject
         source.clip = sfx;
         source.loop = looping;
         source.Play();
-        
+        source.pitch = Random.Range(minPitch, maxPitch);
 
         // attach a component to the Gameobject that kills the gameobject if the sound is done playing
         scriptDestroy = audioObject.AddComponent<DestroyAudioObjectOnComplete>();
@@ -41,7 +45,7 @@ public class SFXEvent : ScriptableObject
     public void Stop()
     {
         // check if the object started playing in the first place
-        if (scriptDestroy = null)
+        if (scriptDestroy == null)
         {
             return;
         }

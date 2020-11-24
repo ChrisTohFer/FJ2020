@@ -48,7 +48,7 @@ MonoBehaviour:
   - name: Sling
     soundEffect: {fileID: 0}
   - name: Fling
-    soundEffect: {fileID: 0}
+    soundEffect: {fileID: 11400000, guid: 3f93e4b5bc9d40d4aa63d9f12c0b905a, type: 2}
   - name: Swing
     soundEffect: {fileID: 0}
   - name: FollowerCheer
