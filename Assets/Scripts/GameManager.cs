@@ -27,14 +27,23 @@ public class GameManager : MonoBehaviour
         {
             gminstance = this;
         }
-        currentTime.text = timeStart.ToString("F2");
-        highScore.text = PlayerPrefs.GetFloat("HighScore", 0).ToString();
+
+        if (highScore == null||currentTime == null)
+        {
+            print("EMPTY OBJECT MUST BE THE TUTORIAL LEVEL");
+        }
+        else
+        {
+            highScore.text = PlayerPrefs.GetFloat("HighScore", 0).ToString();
+            currentTime.text = timeStart.ToString("F2");
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timerActive == false)
+        if (timerActive == false && currentTime != null)
         {
             timeStart += Time.deltaTime;
             currentTime.text = timeStart.ToString("F2");

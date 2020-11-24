@@ -70,6 +70,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb80acecd16d8d498ece179ef2fff85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collectableScore: 0
+  collectableText: {fileID: 0}
   timeStart: 0
   playerRef: {fileID: 0}
   playerRb: {fileID: 0}
