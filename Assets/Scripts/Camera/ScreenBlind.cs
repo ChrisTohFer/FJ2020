@@ -26,6 +26,7 @@ public class ScreenBlind : MonoBehaviour
 
     public static void Enter()
     {
+        AudioManager.PlaySoundEffect("LevelSwap");
         singleton.StopAllCoroutines();
         singleton.StartCoroutine(singleton.Transition(Vector3.up * singleton.distance, Vector3.zero, singleton.duration));
     }

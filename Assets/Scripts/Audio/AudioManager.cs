@@ -28,10 +28,12 @@ public class AudioManager : MonoBehaviour
         {
             singleton = this;
             DontDestroyOnLoad(gameObject);
+            m_soundEffects = new Dictionary<string, SFXEvent>();
 
-            foreach(NamedSoundEffect nse in soundEffects)
+            foreach (NamedSoundEffect nse in soundEffects)
             {
-                m_soundEffects.Add(nse.name, nse.soundEffect);
+                if(nse.soundEffect != null)
+                    m_soundEffects.Add(nse.name, nse.soundEffect);
             }
         }
         else
@@ -43,16 +45,22 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        if (singleton == this)
+        if (singleton == this && music != null)
             music.Play();
     }
 
     public static void PlaySoundEffect(string name)
     {
+        if (singleton == null || !singleton.m_soundEffects.ContainsKey(name))
+            return;
+
         singleton.m_soundEffects[name].Play();
     }
     public static void StopSoundEffect(string name)
     {
+        if (singleton == null || !singleton.m_soundEffects.ContainsKey(name))
+            return;
+
         singleton.m_soundEffects[name].Stop();
     }
 

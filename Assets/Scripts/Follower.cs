@@ -77,6 +77,8 @@ public class Follower : MonoBehaviour
             followTarget = lastFollower.transform;
         }
         lastFollower = this;
+
+        AudioManager.PlaySoundEffect("FollowerCheer");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

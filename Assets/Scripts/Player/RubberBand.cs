@@ -91,7 +91,9 @@ public class RubberBand : MonoBehaviour
 
     IEnumerator BandSling(float duration, Vector3 destination)
     {
-        if(duration == 0)
+        AudioManager.PlaySoundEffect("Sling");
+        
+        if (duration == 0)
         {
             pin.position = destination;
             yield break;

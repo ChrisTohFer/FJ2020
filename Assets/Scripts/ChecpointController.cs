@@ -31,6 +31,8 @@ public class ChecpointController : MonoBehaviour
             lastCheckPointReached = transform.position;
             // set to checkpoint location
             //currentrespawnPoint = other.transform.position;
+
+            AudioManager.PlaySoundEffect("Checkpoint");
         }
     }
 }

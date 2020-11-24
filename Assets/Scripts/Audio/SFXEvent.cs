@@ -33,6 +33,8 @@ public class SFXEvent : ScriptableObject
         // attach a component to the Gameobject that kills the gameobject if the sound is done playing
         scriptDestroy = audioObject.AddComponent<DestroyAudioObjectOnComplete>();
 
+        //Prevent sounds from being cut off if we change scenes while they are playing
+        DontDestroyOnLoad(audioObject);
     }
 
     // If this is a looping sound this will stop it

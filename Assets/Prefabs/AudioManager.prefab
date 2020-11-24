@@ -45,5 +45,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   music: {fileID: 0}
   soundEffects:
-  - name: 
+  - name: Sling
+    soundEffect: {fileID: 0}
+  - name: Fling
+    soundEffect: {fileID: 0}
+  - name: Swing
+    soundEffect: {fileID: 0}
+  - name: FollowerCheer
+    soundEffect: {fileID: 0}
+  - name: LevelSwap
+    soundEffect: {fileID: 0}
+  - name: Checkpoint
     soundEffect: {fileID: 0}

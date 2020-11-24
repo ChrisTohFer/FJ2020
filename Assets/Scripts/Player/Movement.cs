@@ -212,6 +212,8 @@ public class Movement : MonoBehaviour
 
     IEnumerator FlingToPin()
     {
+        AudioManager.PlaySoundEffect("Fling");
+
         var direction = m_band.StretchVector.normalized;
         var velocity = direction * flingSpeed;
         m_rigidBody.velocity = velocity;
@@ -244,6 +246,7 @@ public class Movement : MonoBehaviour
             angle = swingMaxAngle * Mathf.Sign(angle);
 
         var phase = Mathf.Asin(angle / swingMaxAngle);
+        var previousPhase = phase;
         if (angle > 0 && angle < Mathf.PI)
             phase = Mathf.PI - phase;
 
@@ -252,9 +255,18 @@ public class Movement : MonoBehaviour
         Vector3 targetPosition;
         do
         {
+            //Increment phase
             phase += Mathf.PI * 2f * swingFrequency * Time.deltaTime;
             if (phase > Mathf.PI * 2f)
                 phase -= Mathf.PI * 2f;
+
+            //Check to see if we should play sound effect
+            float threshold = (Mathf.PI - swingTolerance) / 2f;
+            if ((phase > threshold && previousPhase <= threshold)
+                || (phase > threshold + Mathf.PI && previousPhase <= threshold + Mathf.PI))
+                AudioManager.PlaySoundEffect("Swing");
+
+            //Define positions and movement
             var targetAngle = Mathf.Sin(phase) * swingMaxAngle;
             targetPosition = pivot + new Vector3(Mathf.Sin(targetAngle), -Mathf.Cos(targetAngle), 0f) * swingRadius;
             var displacement = targetPosition - transform.position;
