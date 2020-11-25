@@ -26,6 +26,7 @@ public class Movement : MonoBehaviour
     public float swingMaxAngle = Mathf.PI / 4f;
     public float swingSpeedBoost = 15f;
     public float swingTolerance = Mathf.PI / 4f;
+    public float swingEndTolerance = .15f;
     public bool debugFlyMode = false;
 
     //Public references
@@ -276,11 +277,11 @@ public class Movement : MonoBehaviour
 
         if (Vector3.Distance(targetPosition, transform.position) < 1.5f)
         {
-            if (phase <= Mathf.PI / 2f && phase > Mathf.PI / 2f - swingTolerance)
+            if (phase <= Mathf.PI / 2f + swingEndTolerance && phase > Mathf.PI / 2f - swingTolerance)
             {
                 m_rigidBody.velocity = new Vector3(Mathf.Cos(swingMaxAngle), Mathf.Sin(swingMaxAngle), 0f) * swingSpeedBoost;
             }
-            else if (phase <= 3f * Mathf.PI / 2f && phase > 3f * Mathf.PI / 2f - swingTolerance)
+            else if (phase <= 3f * Mathf.PI / 2f + swingEndTolerance && phase > 3f * Mathf.PI / 2f - swingTolerance)
             {
                 m_rigidBody.velocity = new Vector3(-Mathf.Cos(swingMaxAngle), Mathf.Sin(swingMaxAngle), 0f) * swingSpeedBoost;
             }
