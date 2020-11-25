@@ -17,3 +17,4 @@ MonoBehaviour:
   looping: 0
   minPitch: 1
   maxPitch: 1
+  volume: 0.32
