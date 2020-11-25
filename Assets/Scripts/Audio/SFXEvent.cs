@@ -20,6 +20,9 @@ public class SFXEvent : ScriptableObject
     public float minPitch = 1f;
     public float maxPitch = 1f;
 
+    //Determines the volume of the effect. Needs to be between 0 and 1
+    public float volume = 1f;
+
     AudioSource source;
 
     DestroyAudioObjectOnComplete scriptDestroy;
@@ -33,6 +36,7 @@ public class SFXEvent : ScriptableObject
         source.loop = looping;
         source.Play();
         source.pitch = Random.Range(minPitch, maxPitch);
+        source.volume = volume;
 
         // attach a component to the Gameobject that kills the gameobject if the sound is done playing
         scriptDestroy = audioObject.AddComponent<DestroyAudioObjectOnComplete>();
