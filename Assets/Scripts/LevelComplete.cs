@@ -7,8 +7,10 @@ public class LevelComplete : MonoBehaviour
 {
     public void StageComplete()
     {
-        ScreenBlind.Enter();
-        Invoke("StageCompletePrivate", 1);
+        if (ScreenBlind.Enter())
+            Invoke("StageCompletePrivate", 1);
+        else
+            StageCompletePrivate();
         
     }
     private void StageCompletePrivate()

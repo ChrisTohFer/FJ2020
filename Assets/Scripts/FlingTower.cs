@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class FlingTower : MonoBehaviour
 {
@@ -23,9 +24,29 @@ public class FlingTower : MonoBehaviour
     public GameObject platformPrefab;
 
     public float grappleReductionPerRow = 0.995f;
+    public int maximumGrappleSpacing = 4;
+
+    public TextMeshProUGUI m_heightScore;
+    public TextMeshProUGUI m_heightHighScore;
+    public TextMeshProUGUI m_followerScore;
+    public TextMeshProUGUI m_followerHighScore;
 
     int lastRow = 0;
     bool exiting = false;
+
+    int lastGrappleRow = 0;
+    int followers = 0;
+
+    private void OnEnable()
+    {
+        m_heightHighScore.text = "" + PlayerPrefs.GetInt("FlingTowerHeightHighScore", 0) + ":   Height";
+        m_followerHighScore.text = "" + PlayerPrefs.GetInt("FlingTowerFollowerHighScore", 0) + ":Followers";
+        Follower.FollowerGained.AddListener(GainedFollower);
+    }
+    private void OnDisable()
+    {
+        Follower.FollowerGained.RemoveListener(GainedFollower);
+    }
 
     private void FixedUpdate()
     {
@@ -41,12 +62,25 @@ public class FlingTower : MonoBehaviour
             ++lastRow;
             Accumulate();
             GenerateRow();
+            
+            m_heightScore.text = "Height   :" + lastRow;
+            if(PlayerPrefs.GetInt("FlingTowerHeightHighScore", 0) < lastRow)
+            {
+                m_heightHighScore.text = "" + lastRow + ":   Height";
+                PlayerPrefs.SetInt("FlingTowerHeightHighScore", lastRow);
+            }
         }
     }
 
-    public void Lose()
+    void GainedFollower()
     {
-
+        ++followers;
+        m_followerScore.text = "Followers:" + followers;
+        if (PlayerPrefs.GetInt("FlingTowerFollowerHighScore", 0) < lastRow)
+        {
+            m_followerHighScore.text = "" + followers + ":Followers";
+            PlayerPrefs.SetInt("FlingTowerFollowerHighScore", followers);
+        }
     }
 
     public void EndLevel()
@@ -100,6 +134,14 @@ public class FlingTower : MonoBehaviour
         var grapples  = (int)Mathf.Min(Random.value * (int)accumulatedGrapples, (int) accumulatedGrapples / 2f);  //Multiply random value by number of available grapples, and round down
         var followers = (int)Mathf.Min(Random.value * (int)accumulatedFollowers, (int)accumulatedFollowers / 3f);
         var platforms = (int)Mathf.Min(Random.value * (int)accumulatedPlatforms, (int)accumulatedPlatforms / 3f);
+
+        if (grapples > 0)
+            lastGrappleRow = lastRow;
+        else if (lastRow - lastGrappleRow >= maximumGrappleSpacing)
+        {
+            grapples = 1;
+            lastGrappleRow = lastRow;
+        }
 
         for(; grapples > 0; grapples--)
         {

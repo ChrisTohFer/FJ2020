@@ -24,11 +24,15 @@ public class ScreenBlind : MonoBehaviour
         Exit();
     }
 
-    public static void Enter()
+    public static bool Enter()
     {
+        if (singleton == null)
+            return false;
         AudioManager.PlaySoundEffect("LevelSwap");
         singleton.StopAllCoroutines();
         singleton.StartCoroutine(singleton.Transition(Vector3.up * singleton.distance, Vector3.zero, singleton.duration));
+
+        return true;
     }
 
     public static void Exit()

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Follower : MonoBehaviour
 {
@@ -21,19 +22,25 @@ public class Follower : MonoBehaviour
 
     Transform followTarget = null;
     bool collected = false;
+    static UnityEvent m_followerGained = new UnityEvent();
+
+    public static UnityEvent FollowerGained
+    {
+        get { return m_followerGained; }
+    }
 
     private void LevelStart(int level)
     {
     }
     private void OnEnable()
     {
-        if(followerCount == 0)
-            lastFollower = null;
         followerCount += 1;
     }
     private void OnDisable()
     {
         followerCount -= 1;
+        if (followerCount == 0)
+            lastFollower = null;
     }
 
     private void Start()
@@ -60,6 +67,8 @@ public class Follower : MonoBehaviour
 
     public void Collect()
     {
+        m_followerGained.Invoke();
+
         collected = true;
         var gameManager = GameManager.gminstance;
         if(gameManager != null)
