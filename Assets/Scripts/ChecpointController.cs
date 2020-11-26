@@ -26,13 +26,21 @@ public class ChecpointController : MonoBehaviour
     {
         if (other.tag =="Player")
         {
-            checkpointSpriteRenderer.sprite = greenFlag;
-            checkpointReached = true;
-            lastCheckPointReached = transform.position;
-            // set to checkpoint location
-            //currentrespawnPoint = other.transform.position;
+            if(checkpointReached == false)
+            {
+                checkpointSpriteRenderer.sprite = greenFlag;
+                checkpointReached = true;
+                lastCheckPointReached = transform.position;
+                // set to checkpoint location
+                //currentrespawnPoint = other.transform.position;
 
-            AudioManager.PlaySoundEffect("Checkpoint");
+                AudioManager.PlaySoundEffect("Checkpoint");
+            }
+            else 
+            {
+                lastCheckPointReached = transform.position;
+            }
+
         }
     }
 }

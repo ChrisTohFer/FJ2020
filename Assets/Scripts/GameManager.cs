@@ -28,15 +28,6 @@ public class GameManager : MonoBehaviour
             gminstance = this;
         }
 
-        if (highScore == null||currentTime == null)
-        {
-            print("EMPTY OBJECT MUST BE THE TUTORIAL LEVEL");
-        }
-        else
-        {
-            highScore.text = PlayerPrefs.GetFloat("HighScore", 0).ToString();
-            currentTime.text = timeStart.ToString("F2");
-        }
 
     }
 
@@ -58,6 +49,7 @@ public class GameManager : MonoBehaviour
         {
             // set game state to done 
             LevelComplete = true;
+            timerActive = true;
             LevelCompleted();
 
         }
@@ -73,31 +65,25 @@ public class GameManager : MonoBehaviour
     {
         if(LevelComplete == true)
         {
-            // store our time 
+            if (timeStart < PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name, 1000))
+            {
+                PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name, timeStart);
+
+            }
+            highScore.text = PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name, 0).ToString();
+
+            // disable player control 
+            playerRb.velocity = Vector3.zero;
+            playerRef = Movement.playerTransform.GetComponent<PlayerInput>();
+            playerRef.enabled = false;
             
-            if (timeStart < PlayerPrefs.GetFloat("HighScore", 0))
-            {
-                PlayerPrefs.SetFloat("HighScore", timeStart);
-                
-            }
-            else
-            {
-                // pause the timer
-                timerActive = !timerActive;
 
-                // disable player control 
-                playerRb.velocity = Vector3.zero;
-                playerRef = Movement.playerTransform.GetComponent<PlayerInput>();
-                playerRef.enabled = false;
+            // Load the score screen
+            completeStageUI.SetActive(true);
 
-                // Load the score screen
-                completeStageUI.SetActive(true);
-
-                // load next scene after short delay
-                //Invoke("LoadNextLevel", LoadSceneTimeSeconds);
-            }
-
-
+            // load next scene after short delay
+            //Invoke("LoadNextLevel", LoadSceneTimeSeconds);
+            // store our time 
 
         }
     }
