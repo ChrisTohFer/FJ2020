@@ -46,7 +46,7 @@ MonoBehaviour:
   music: {fileID: 11400000, guid: 060be60a42e507a439956d7a303e1ef9, type: 2}
   soundEffects:
   - name: Sling
-    soundEffect: {fileID: 0}
+    soundEffect: {fileID: 11400000, guid: 63d374b4622af5e48adb5dca9e53bfe3, type: 2}
   - name: Fling
     soundEffect: {fileID: 11400000, guid: 3f93e4b5bc9d40d4aa63d9f12c0b905a, type: 2}
   - name: Swing
