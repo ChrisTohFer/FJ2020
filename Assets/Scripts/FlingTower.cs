@@ -76,7 +76,7 @@ public class FlingTower : MonoBehaviour
     {
         ++followers;
         m_followerScore.text = "Followers:" + followers;
-        if (PlayerPrefs.GetInt("FlingTowerFollowerHighScore", 0) < lastRow)
+        if (PlayerPrefs.GetInt("FlingTowerFollowerHighScore", 0) < followers)
         {
             m_followerHighScore.text = "" + followers + ":Followers";
             PlayerPrefs.SetInt("FlingTowerFollowerHighScore", followers);
@@ -173,6 +173,13 @@ public class FlingTower : MonoBehaviour
             var positionIndex = Random.Range(0, positions.Count - 1);
             var position = positions[positionIndex];
             positions.RemoveAt(positionIndex);
+            if(Physics2D.Raycast(position, Vector2.down, 1f, LayerMask.GetMask("Grapple")))
+            {
+                //Grapple below this position, choose another
+                positionIndex = Random.Range(0, positions.Count - 1);
+                position = positions[positionIndex];
+                positions.RemoveAt(positionIndex);
+            }
             Instantiate(platformPrefab, position, Quaternion.identity);
             accumulatedPlatforms -= 1f;
         }

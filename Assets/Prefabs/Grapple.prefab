@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8694313181577178802}
   - component: {fileID: 2071564915480530885}
   - component: {fileID: 7054517122547938368}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: EyeSpy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 7297225113977691419}
   - component: {fileID: 7297225113977691417}
   - component: {fileID: 7297225113977691416}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Grapple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
