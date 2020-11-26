@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3ce8abf8f26e549a5bf85d7b8660c8, type: 3}
   m_Name: SFXSwing
   m_EditorClassIdentifier: 
-  sfx: {fileID: 0}
+  sfx: {fileID: 8300000, guid: 7cb8f45d72d6d614792ff80c073f1eb1, type: 3}
   audioOutput: {fileID: 0}
   looping: 0
   minPitch: 1
