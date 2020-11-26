@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     public bool timerActive = false;
     public GameObject completeStageUI;
     public bool LevelComplete = false;
-    public float LoadSceneTimeSeconds = 10f;
 
     // Start is called before the first frame update
     void Start()
@@ -34,10 +33,14 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timerActive == false && currentTime != null)
+        if (timerActive == false)
         {
             timeStart += Time.deltaTime;
-            currentTime.text = timeStart.ToString("F2");
+            
+            if(currentTime != null)
+            {
+                currentTime.text = timeStart.ToString("F2");
+            }    
             
         }
 
@@ -65,12 +68,16 @@ public class GameManager : MonoBehaviour
     {
         if(LevelComplete == true)
         {
-            if (timeStart < PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name, 1000))
+            if (timeStart < PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name+"A", 1000))
             {
-                PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name, timeStart);
+                PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "A", timeStart);
 
             }
-            highScore.text = PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name, 0).ToString();
+            if(highScore != null)
+            {
+                highScore.text = PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + "A", 0).ToString();
+            }
+                
 
             // disable player control 
             playerRb.velocity = Vector3.zero;
